@@ -1,7 +1,10 @@
 from pyquery import PyQuery as pq
 from urllib.request import Request,urlopen
 import os,codecs
-import sys
+import sys,re
+
+import util.commonReg as m_reg
+
 
 class basicParse:
 
@@ -15,9 +18,15 @@ class basicParse:
 		raw = urlopen(req).read()
 		self.data =pq(raw)
 	def getUrl(self):
-		urlStack = self.data('a').attr('href');
-		print (urlStack)
-		#raise urlStack		
+		urlStack = self.data('a').text();
+		for temp in urlStack.split(' '):
+			print(temp)
+		#raise urlStack
+
+	def __urlRegex(string):
+		pattern ="http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+		
+		
 def main():
 	test=basicParse('https://www.ptt.cc/bbs/Shadowverse/M.1497623782.A.DE3.html')
 	test.parser()
